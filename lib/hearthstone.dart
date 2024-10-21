@@ -41,24 +41,6 @@ class _HearthstonePageState extends State<HearthstonePage> {
     return Summary();
   }
 
-  Widget _handleSnapshot(AsyncSnapshot<Summary> snapshot) {
-    if (snapshot.connectionState == ConnectionState.waiting) {
-      return const CircularProgressIndicator(); 
-    }
-    else if (snapshot.hasData) {    
-        JsonEncoder encoder = const JsonEncoder.withIndent('  ');
-        String prettyprint = encoder.convert(snapshot.data!);
-        return SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Text(prettyprint),
-      );
-    } else if (snapshot.hasError) {
-      return Text('${snapshot.error}');
-    }
-    
-    return const Text('');
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,7 +51,21 @@ class _HearthstonePageState extends State<HearthstonePage> {
         child: FutureBuilder<Summary>(
           future: futureSummary,
           builder: (context, snapshot) {
-            return _handleSnapshot(snapshot);
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator(); 
+            }
+            else if (snapshot.hasData) {    
+                JsonEncoder encoder = const JsonEncoder.withIndent('  ');
+                String prettyprint = encoder.convert(snapshot.data!);
+                return SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Text(prettyprint),
+              );
+            } else if (snapshot.hasError) {
+              return Text('${snapshot.error}');
+            }
+            
+            return const Text('');
           },
         ),
       ),
