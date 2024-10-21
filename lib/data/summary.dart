@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:hs_stats/data/card.dart';
 import 'package:hs_stats/data/collection.dart';
 
@@ -26,6 +29,13 @@ Future<Summary> fetchSummary() async {
   }
   subtractUncollectibleSignature(summary);
   subtractUncollectibleInWild(summary);
+
+  final cacheManager = DefaultCacheManager();
+  cacheManager.putFile(
+    'hearthstoneKey',
+    utf8.encode(jsonEncode(summary)),
+    fileExtension: 'json',
+  );
   return summary;
 }
 
