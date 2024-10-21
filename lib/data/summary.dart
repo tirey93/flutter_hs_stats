@@ -41,14 +41,15 @@ Future<Summary> fetchSummary() async {
 
 class Summary {
    final Map<String, Expansion> expansions = {
-    "ISLAND_VACATION": Expansion("Perils in Paradise", 2024, 7),
-    "WHIZBANGS_WORKSHOP": Expansion("Whizbang's Workshop", 2024, 3),
+    "WHIZBANGS_WORKSHOP": Expansion("Whizbang's Workshop", "Year of the Pegasus", "Whizbang", 2024, 3),
+    "ISLAND_VACATION": Expansion("Perils in Paradise", "Year of the Pegasus", "Perils", 2024, 7),
+    "_EXP3": Expansion("???", "Year of the Pegasus", "???", 2024, 11),
 
-    "WILD_WEST": Expansion("Showdown in the Badlands", 2023, 11),
-    "TITANS": Expansion("Titans", 2023, 8),
-    "BATTLE_OF_THE_BANDS": Expansion("Festival of Legends", 2023, 4),
+    "BATTLE_OF_THE_BANDS": Expansion("Festival of Legends", "Year of the Wolf", "Festival", 2023, 4),
+    "TITANS": Expansion("Titans", 'Year of the Wolf', "Titans", 2023, 8),
+    "WILD_WEST": Expansion("Showdown in the Badlands", "Year of the Wolf", "Badlands", 2023, 11),
 
-    "WILD": Expansion("Wild", null, null),
+    "WILD": Expansion("Wild", 'Wild', "Wild", null, null),
    };
 
    void incrementStandard(CardEntry card, Map<String, int> qualities)
@@ -75,11 +76,13 @@ class Summary {
 }
 
 class Expansion {
-  final String name;
+  final String fullName;
+  final String yearName;
+  final String shortName;
   int? releaseYear;
   int? releaseMonth;
 
-  Expansion(this.name, this.releaseYear, this.releaseMonth);
+  Expansion(this.fullName, this.yearName, this.shortName, this.releaseYear, this.releaseMonth);
   
   final Map<String, Rarity> rarities = {
     "COMMON": Rarity("Common", 0, 2),
@@ -88,8 +91,19 @@ class Expansion {
     "LEGENDARY": Rarity("Legendary", 20, 80),
   };
 
+  int sumAll() {
+    int result = 0;
+    for (var rarity in rarities.entries) {
+      result += rarity.value.getNormalCost();
+      result += rarity.value.getPremiumCost();
+    }
+    return result;
+  }
+
   Expansion.fromJson(Map<String, dynamic> json)
-      : name = json['name'],
+      : fullName = json['fullName'],
+        yearName = json['yearName'],
+        shortName = json['shortName'],
         releaseYear = json['releaseYear'],
         releaseMonth = json['releaseMonth'] {
     rarities.clear(); // Ensure rarities are cleared before loading from JSON
@@ -99,7 +113,9 @@ class Expansion {
   }
 
   Map<String, dynamic> toJson() => {
-      'name': name,
+      'fullName': fullName,
+      'yearName': yearName,
+      'shortName': shortName,
       'releaseYear': releaseYear,
       'releaseMonth': releaseMonth,
       'rarities': rarities.map((key, value) => MapEntry(key, value.toJson())),
