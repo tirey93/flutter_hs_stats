@@ -129,15 +129,18 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
       .groupListsBy((x) => x.value.yearName);
     
     var colors = [
+      Colors.orange,
       Colors.blue,
-      Colors.orange
     ];
     return ListView.builder(
       itemCount: years.length,
       itemBuilder: (context, index) {
         final year = years.entries.toList()[index].value;
         if(year[0].key == "WILD"){
-          return ExpansionCard(expansion: year[0].value, color: Colors.grey);
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(0, 30, 0, 30),
+            child: ExpansionCard(expansion: year[0].value, color: Colors.black),
+          );
         } 
         var yearSorted = year.sorted((a, b) => a.value.releaseMonth!.compareTo(b.value.releaseMonth!));
     
