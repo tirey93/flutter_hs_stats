@@ -14,7 +14,6 @@ class _ExpansionCardState extends State<ExpansionCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      surfaceTintColor: Colors.orange,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -24,7 +23,7 @@ class _ExpansionCardState extends State<ExpansionCard> {
               columnWidths: {0: FixedColumnWidth(200)},
               children: [
                 TableRow(children: [
-                  Padding(padding: EdgeInsets.all(8), child: Text(widget.expansion.yearName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),),
+                  Padding(padding: EdgeInsets.all(8), child: Text(getName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),),
                   Padding(padding: EdgeInsets.all(8), child: Text(widget.expansion.sumAll().toString())),
                   getAvarage(widget.expansion.releaseYear),
                 ]),
@@ -70,10 +69,16 @@ class _ExpansionCardState extends State<ExpansionCard> {
     );
   }
 
+  String get getName {
+    if (widget.expansion.releaseYear == null)
+      return widget.expansion.yearName;
+    return widget.expansion.fullName;
+  }
+
   Widget getAvarage(int? releaseYear) {
     if (releaseYear == null)
       return Padding(padding: EdgeInsets.all(8), child: Text((widget.expansion.sumAll() / getMonths()).toStringAsFixed(2)));
-    return Placeholder();
+    return Text('');
   }
 
   int getMonths() {

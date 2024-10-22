@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hs_stats/Data/summary.dart';
+import 'package:hs_stats/widgets/expansion_card.dart';
 
 class HearthstoneExpansionPage extends StatefulWidget {
-  const HearthstoneExpansionPage({super.key});
+  final List<MapEntry<String, Expansion>> expansion;
+  const HearthstoneExpansionPage(this.expansion, {super.key});
 
   @override
   State<HearthstoneExpansionPage> createState() => _HearthstoneExpansionPageState();
@@ -10,6 +13,17 @@ class HearthstoneExpansionPage extends StatefulWidget {
 class _HearthstoneExpansionPageState extends State<HearthstoneExpansionPage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Expansions'),
+      ),
+      body: ListView.builder(
+        itemCount: widget.expansion.length,
+        itemBuilder: (context, index) {
+          final expansion = widget.expansion[index].value;
+          if (expansion.sumAll() > 0)
+            return ExpansionCard(expansion: expansion);
+        })
+    );
   }
 }

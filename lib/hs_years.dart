@@ -5,6 +5,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:hs_stats/Data/summary.dart';
+import 'package:hs_stats/hs_expansion.dart';
 import 'package:hs_stats/widgets/expansion_card.dart';
 
 class HearthstoneYearsPage extends StatefulWidget {
@@ -47,7 +48,7 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('This is kocham Goferka'),
+        title: const Text('Years'),
       ),
       body: Center(
         child: FutureBuilder<Summary>(
@@ -68,9 +69,7 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
                   final year = years.entries.toList()[index].value;
                   if(year[0].key == "WILD"){
                     return ExpansionCard(expansion: year[0].value);
-                  }
-
-                  
+                  } 
                   var yearSorted = year.sorted((a, b) => a.value.releaseMonth!.compareTo(b.value.releaseMonth!));
                   return makeCard(yearSorted);
                 });
@@ -93,9 +92,7 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
   Card makeCard(List<MapEntry<String, Expansion>> expansions) {
     return Card(
         child: InkWell(
-          onTap: () {
-            debugPrint('Card tapped: ${expansions.firstOrNull!.value.yearName}');
-          },
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => HearthstoneExpansionPage(expansions))),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
