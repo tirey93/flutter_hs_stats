@@ -60,9 +60,8 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
       'sessionKey',
       utf8.encode(jsonEncode(myController.text)),
       fileExtension: 'json',);
-    setState(() {
-      session = myController.text;
-    });
+    session = myController.text;
+    futureSummary = loadSummary();
   }
 
   Future<Summary>? loadSummary({bool forceRefresh = false}) async {
@@ -88,33 +87,36 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
             onPressed: () => _dialogInfo(context),
           ),
           IconButton(
-            icon: const Icon(Icons.refresh),
-            tooltip: 'Pull refresh',
-            onPressed: () => _pullRefresh(),
-          ),
-          IconButton(
-            icon: const Icon(Icons.edit_notifications_outlined),
+            icon: const Icon(Icons.edit_outlined),
             tooltip: 'Change session',
             onPressed: () => _dialogSession(context),
           ),
         ]
       ),
-      body: Center(
-        child: FutureBuilder<Summary>(
-          future: futureSummary,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator(); 
-            }
-            else if (snapshot.hasData) {    
-              var summary = snapshot.data!;
-              return drawSummary(summary);
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
-            }
-            
-            return const Text('');
-          },
+      body: RefreshIndicator(
+        onRefresh: _pullRefresh,
+        child: Center(
+          child: FutureBuilder<Summary>(
+            future: futureSummary,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator(); 
+              }
+              else if (snapshot.hasData) {    
+                var summary = snapshot.data!;
+                return drawSummary(summary);
+              } else if (snapshot.hasError) {
+                return Column(
+                  children: [
+                    Text('${snapshot.error}'),
+                    TextButton(onPressed: _pullRefresh, child: const Text('Refresh'),),
+                  ],
+                );
+              }
+              
+              return const Text('');
+            },
+          ),
         ),
       ),
     );
