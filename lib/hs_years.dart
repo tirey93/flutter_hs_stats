@@ -127,24 +127,30 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
     var years = summary.expansions.entries
       .sorted((a, b) => -a.value.releaseYear!.compareTo(b.value.releaseYear ?? 0))
       .groupListsBy((x) => x.value.yearName);
-      
+    
+    var colors = [
+      Colors.blue,
+      Colors.orange
+    ];
     return ListView.builder(
       itemCount: years.length,
       itemBuilder: (context, index) {
         final year = years.entries.toList()[index].value;
         if(year[0].key == "WILD"){
-          return ExpansionCard(expansion: year[0].value);
+          return ExpansionCard(expansion: year[0].value, color: Colors.grey);
         } 
         var yearSorted = year.sorted((a, b) => a.value.releaseMonth!.compareTo(b.value.releaseMonth!));
     
-        return drawCard(yearSorted);
+        return drawCard(yearSorted, colors[index]);
       });
   }
 
-  Card drawCard(List<MapEntry<String, Expansion>> expansions) {
+  Card drawCard(List<MapEntry<String, Expansion>> expansions, Color color) {
     return Card(
+        elevation: 10,
+        surfaceTintColor: color,
         child: InkWell(
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => HearthstoneExpansionPage(expansions))),
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => HearthstoneExpansionPage(expansions, color))),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[

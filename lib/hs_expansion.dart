@@ -4,7 +4,8 @@ import 'package:hs_stats/widgets/expansion_card.dart';
 
 class HearthstoneExpansionPage extends StatefulWidget {
   final List<MapEntry<String, Expansion>> expansion;
-  const HearthstoneExpansionPage(this.expansion, {super.key});
+  final Color color;
+  const HearthstoneExpansionPage(this.expansion, this.color, {super.key});
 
   @override
   State<HearthstoneExpansionPage> createState() => _HearthstoneExpansionPageState();
@@ -22,7 +23,7 @@ class _HearthstoneExpansionPageState extends State<HearthstoneExpansionPage> {
         itemBuilder: (context, index) {
           final expansion = widget.expansion[index].value;
           if (expansion.sumAll() > 0)
-            return ExpansionCard(expansion: expansion);
+            return ExpansionCard(expansion: expansion, color: widget.color);
         })
     );
   }

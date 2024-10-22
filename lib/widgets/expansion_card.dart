@@ -3,7 +3,8 @@ import 'package:hs_stats/Data/summary.dart';
 
 class ExpansionCard extends StatefulWidget {
   final Expansion expansion;
-  const ExpansionCard({super.key, required this.expansion});
+  final Color color;
+  const ExpansionCard({super.key, required this.expansion, required this.color});
 
   
   @override
@@ -12,8 +13,10 @@ class ExpansionCard extends StatefulWidget {
 
 class _ExpansionCardState extends State<ExpansionCard> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,) {
     return Card(
+      elevation: 10,
+      surfaceTintColor: widget.color,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
