@@ -75,7 +75,7 @@ class Summary {
     });
   }
 
-    Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson() {
     final map = expansions.map((key, value) => MapEntry(key, value.toJson()));
     if (additionalInfo != null) {
       map['additionalInfo'] = additionalInfo!.toJson();

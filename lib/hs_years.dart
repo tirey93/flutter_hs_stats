@@ -108,24 +108,7 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
             }
             else if (snapshot.hasData) {    
               var summary = snapshot.data!;
-              infoDust = summary.additionalInfo!.rares.toString();
-              var dateTime = summary.additionalInfo!.lastModified;
-              infoDateModified = DateFormat("dd-MM-yyyy HH:mm").format(dateTime);
-              var years = summary.expansions.entries
-                .sorted((a, b) => -a.value.releaseYear!.compareTo(b.value.releaseYear ?? 0))
-                .groupListsBy((x) => x.value.yearName);
-                
-              return ListView.builder(
-                itemCount: years.length,
-                itemBuilder: (context, index) {
-                  final year = years.entries.toList()[index].value;
-                  if(year[0].key == "WILD"){
-                    return ExpansionCard(expansion: year[0].value);
-                  } 
-                  var yearSorted = year.sorted((a, b) => a.value.releaseMonth!.compareTo(b.value.releaseMonth!));
-
-                  return makeCard(yearSorted);
-                });
+              return drawSummary(summary);
             } else if (snapshot.hasError) {
               return Text('${snapshot.error}');
             }
@@ -137,7 +120,28 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
     );
   }
 
-  Card makeCard(List<MapEntry<String, Expansion>> expansions) {
+  ListView drawSummary(Summary summary) {
+    infoDust = summary.additionalInfo!.rares.toString();
+    var dateTime = summary.additionalInfo!.lastModified;
+    infoDateModified = DateFormat("dd-MM-yyyy HH:mm").format(dateTime);
+    var years = summary.expansions.entries
+      .sorted((a, b) => -a.value.releaseYear!.compareTo(b.value.releaseYear ?? 0))
+      .groupListsBy((x) => x.value.yearName);
+      
+    return ListView.builder(
+      itemCount: years.length,
+      itemBuilder: (context, index) {
+        final year = years.entries.toList()[index].value;
+        if(year[0].key == "WILD"){
+          return ExpansionCard(expansion: year[0].value);
+        } 
+        var yearSorted = year.sorted((a, b) => a.value.releaseMonth!.compareTo(b.value.releaseMonth!));
+    
+        return drawCard(yearSorted);
+      });
+  }
+
+  Card drawCard(List<MapEntry<String, Expansion>> expansions) {
     return Card(
         child: InkWell(
           onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => HearthstoneExpansionPage(expansions))),
@@ -182,6 +186,7 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
         ),
       );
   }
+  
   Future<void> _dialogSession(BuildContext context) {
     return showDialog<void>(
       context: context,
