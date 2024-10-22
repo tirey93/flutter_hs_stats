@@ -15,7 +15,7 @@ Future<Summary> fetchSummary(String session) async {
     cardsFuture.then((value) => cards = value)
   ]);
 
-  var summary = Summary();
+  var summary = Summary(collection.additionalInfo);
   for (var entry in collection.collection) {
     var card = cards.cards[entry.cardId];
     if (card != null){
@@ -40,38 +40,47 @@ Future<Summary> fetchSummary(String session) async {
 }
 
 class Summary {
-   final Map<String, Expansion> expansions = {
-    "WHIZBANGS_WORKSHOP": Expansion("Whizbang's Workshop", "Year of the Pegasus", "Whizbang", 2024, 3),
-    "ISLAND_VACATION": Expansion("Perils in Paradise", "Year of the Pegasus", "Perils", 2024, 7),
-    "_EXP3": Expansion("???", "Year of the Pegasus", "???", 2024, 11),
+  AdditionalInfo? additionalInfo;
+  final Map<String, Expansion> expansions = {
+  "WHIZBANGS_WORKSHOP": Expansion("Whizbang's Workshop", "Year of the Pegasus", "Whizbang", 2024, 3),
+  "ISLAND_VACATION": Expansion("Perils in Paradise", "Year of the Pegasus", "Perils", 2024, 7),
+  "_EXP3": Expansion("???", "Year of the Pegasus", "???", 2024, 11),
 
-    "BATTLE_OF_THE_BANDS": Expansion("Festival of Legends", "Year of the Wolf", "Festival", 2023, 4),
-    "TITANS": Expansion("Titans", 'Year of the Wolf', "Titans", 2023, 8),
-    "WILD_WEST": Expansion("Showdown in the Badlands", "Year of the Wolf", "Badlands", 2023, 11),
+  "BATTLE_OF_THE_BANDS": Expansion("Festival of Legends", "Year of the Wolf", "Festival", 2023, 4),
+  "TITANS": Expansion("Titans", 'Year of the Wolf', "Titans", 2023, 8),
+  "WILD_WEST": Expansion("Showdown in the Badlands", "Year of the Wolf", "Badlands", 2023, 11),
 
-    "WILD": Expansion("Wild", 'Wild', "Wild", null, null),
-   };
+  "WILD": Expansion("Wild", 'Wild', "Wild", null, null),
+  };
 
-   void incrementStandard(CardEntry card, Map<String, int> qualities)
-    => expansions[card.set]
-      !.rarities[card.rarity]
-      !.increment(card.normalCollectible, card.goldenCollectible, qualities);
+  void incrementStandard(CardEntry card, Map<String, int> qualities)
+  => expansions[card.set]
+    !.rarities[card.rarity]
+    !.increment(card.normalCollectible, card.goldenCollectible, qualities);
 
-   void incrementWild(CardEntry card, Map<String, int> qualities)
-    => expansions['WILD']
-      !.rarities[card.rarity]
-      !.increment(card.normalCollectible, card.goldenCollectible, qualities);
+  void incrementWild(CardEntry card, Map<String, int> qualities)
+  => expansions['WILD']
+    !.rarities[card.rarity]
+    !.increment(card.normalCollectible, card.goldenCollectible, qualities);
 
-  Summary();
+  Summary(this.additionalInfo);
   Summary.fromJson(Map<String, dynamic> json) {
-    expansions.clear(); // Clear existing data before populating from JSON
+    expansions.clear();
     json.forEach((key, value) {
-      expansions[key] = Expansion.fromJson(value);
+      if (key == 'additionalInfo') {
+        additionalInfo = AdditionalInfo.fromJson(value);
+      } else {
+        expansions[key] = Expansion.fromJson(value);
+      }
     });
   }
 
-  Map<String, dynamic> toJson() {
-    return expansions.map((key, value) => MapEntry(key, value.toJson()));
+    Map<String, dynamic> toJson() {
+    final map = expansions.map((key, value) => MapEntry(key, value.toJson()));
+    if (additionalInfo != null) {
+      map['additionalInfo'] = additionalInfo!.toJson();
+    }
+    return map;
   }
 }
 

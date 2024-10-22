@@ -7,6 +7,7 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:hs_stats/Data/summary.dart';
 import 'package:hs_stats/hs_expansion.dart';
 import 'package:hs_stats/widgets/expansion_card.dart';
+import 'package:intl/intl.dart';
 
 class HearthstoneYearsPage extends StatefulWidget {
   const HearthstoneYearsPage({super.key});
@@ -20,6 +21,8 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
   final cacheManager = DefaultCacheManager();
   final cacheKey = 'hearthstoneKey';
   String session = "";
+  String infoDust = "";
+  String infoDateModified = "";
   final myController = TextEditingController();
 
   @override
@@ -80,9 +83,19 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
         title: const Text('Years'),
         actions: <Widget>[
           IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: 'Info',
+            onPressed: () => _dialogInfo(context),
+          ),
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            tooltip: 'Pull refresh',
+            onPressed: () => _pullRefresh(),
+          ),
+          IconButton(
             icon: const Icon(Icons.edit_notifications_outlined),
             tooltip: 'Change session',
-            onPressed: () => _dialogBuilder(context),
+            onPressed: () => _dialogSession(context),
           ),
         ]
       ),
@@ -95,6 +108,9 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
             }
             else if (snapshot.hasData) {    
               var summary = snapshot.data!;
+              infoDust = summary.additionalInfo!.rares.toString();
+              var dateTime = summary.additionalInfo!.lastModified;
+              infoDateModified = DateFormat("dd-MM-yyyy HH:mm").format(dateTime);
               var years = summary.expansions.entries
                 .sorted((a, b) => -a.value.releaseYear!.compareTo(b.value.releaseYear ?? 0))
                 .groupListsBy((x) => x.value.yearName);
@@ -107,6 +123,7 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
                     return ExpansionCard(expansion: year[0].value);
                   } 
                   var yearSorted = year.sorted((a, b) => a.value.releaseMonth!.compareTo(b.value.releaseMonth!));
+
                   return makeCard(yearSorted);
                 });
             } else if (snapshot.hasError) {
@@ -116,11 +133,6 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
             return const Text('');
           },
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _pullRefresh,
-        tooltip: 'Refresh',
-        child: const Icon(Icons.refresh),
       ),
     );
   }
@@ -170,7 +182,7 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
         ),
       );
   }
-  Future<void> _dialogBuilder(BuildContext context) {
+  Future<void> _dialogSession(BuildContext context) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -193,6 +205,34 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
                 _saveSession();
                 Navigator.of(context).pop();
               },
+            ),
+          ],
+        );
+      },
+    );
+  }
+  Future<void> _dialogInfo(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Info'),
+          actions: <Widget>[
+            Table(
+              children: [
+                TableRow(
+                  children: [
+                    Text("Rares"),
+                    Text(infoDust),
+                  ]
+                ),
+                TableRow(
+                  children: [
+                    Text("Last modified"),
+                    Text(infoDateModified),
+                  ]
+                ),
+              ],
             ),
           ],
         );
