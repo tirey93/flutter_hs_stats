@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hs_stats/hearthstone.dart';
+import 'package:hs_stats/hs_years.dart';
 
 void main() {
   runApp(const MainApp());
@@ -12,7 +12,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       home: Scaffold(
-        body: HearthstonePage(),
+        body: HearthstoneYearsPage(),
       ),
     );
   }

@@ -144,7 +144,9 @@ class Rarity {
     }
   }
   int getNormalCost() => qualities['regular']! * normalCost;
+  int getNormalCount() => qualities['regular']!;
   int getPremiumCost() => (qualities['golden']! + qualities['signature']!) * premiumCost;
+  int getPremiumCount() => qualities['golden']! + qualities['signature']!;
 
   Rarity.fromJson(Map<String, dynamic> json)
       : id = json['id'],
@@ -159,6 +161,15 @@ class Rarity {
         'qualities': qualities,
       };
 }
+
+
+
+
+
+
+
+
+
 
 void subtractUncollectibleSignature(Summary summary){
   var toSubtracts = {
