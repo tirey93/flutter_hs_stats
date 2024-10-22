@@ -98,7 +98,7 @@ class _HearthstonePageState extends State<HearthstonePage> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  Text(expansions.firstOrNull!.value.yearName!),
+                  Text(expansions.firstOrNull!.value.yearName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
                   const Spacer(),
                   Text(getSum(expansions).toString()),
                   const SizedBox(width: 80),
@@ -106,27 +106,23 @@ class _HearthstonePageState extends State<HearthstonePage> {
                 ],
               ),
             ),
-            Divider(),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
+              padding: const EdgeInsets.fromLTRB(2, 10, 2, 10),
+              child: Table(
+                border: TableBorder.all(width: 1),
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  TableRow(children: [
+                    Center(child: Padding(padding: EdgeInsets.all(5), child: Text(expansions[0].value.shortName))),
+                    Center(child: Padding(padding: EdgeInsets.all(5), child: Text(expansions[1].value.shortName))),
+                    Center(child: Padding(padding: EdgeInsets.all(5), child: Text(expansions[2].value.shortName))),
+                  ]),
+                  TableRow(
                     children: [
-                      Text(expansions[0].value.shortName),
-                      Text(expansions[1].value.shortName),
-                      Text(expansions[2].value.shortName),
+                      Center(child: Padding(padding: EdgeInsets.all(5), child: Text(expansions[0].value.sumAll().toString()))),
+                      Center(child: Padding(padding: EdgeInsets.all(5), child: Text(expansions[1].value.sumAll().toString()))),
+                      Center(child: Padding(padding: EdgeInsets.all(5), child: Text(expansions[2].value.sumAll().toString()))),
                     ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children:[
-                      Text(expansions[0].value.sumAll().toString()),
-                      Text(expansions[1].value.sumAll().toString()),
-                      Text(expansions[2].value.sumAll().toString()),
-                    ],
-                  ),
+                  )
                 ],
               ),
             ),
