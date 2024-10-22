@@ -95,14 +95,15 @@ class _HearthstonePageState extends State<HearthstonePage> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
+              padding: const EdgeInsets.fromLTRB(2, 10, 2, 10),
+              child: Table(
+                columnWidths: {0: FixedColumnWidth(200)},
                 children: [
-                  Text(expansions.firstOrNull!.value.yearName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
-                  const Spacer(),
-                  Text(getSum(expansions).toString()),
-                  const SizedBox(width: 80),
-                  Text((getSum(expansions) / getMonths(expansions)).toStringAsFixed(2)),
+                  TableRow(children: [
+                    Padding(padding: EdgeInsets.all(8), child: Text(expansions.firstOrNull!.value.yearName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),),
+                    Padding(padding: EdgeInsets.all(8), child: Text(getSum(expansions).toString())),
+                    Padding(padding: EdgeInsets.all(8), child: Text((getSum(expansions) / getMonths(expansions)).toStringAsFixed(2))),
+                  ]),
                 ],
               ),
             ),
