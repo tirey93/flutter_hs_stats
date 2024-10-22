@@ -4,8 +4,8 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:hs_stats/data/card.dart';
 import 'package:hs_stats/data/collection.dart';
 
-Future<Summary> fetchSummary() async {
-  var collectionFuture = fetchCollection();
+Future<Summary> fetchSummary(String session) async {
+  var collectionFuture = fetchCollection(session);
   var cardsFuture = fetchCards();
   late CollectionData collection;
   late CardsData cards;

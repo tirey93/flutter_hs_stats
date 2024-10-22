@@ -2,19 +2,18 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:collection/collection.dart';
 
-Future<CollectionData> fetchCollection() async {
+Future<CollectionData> fetchCollection(String session) async {
   final response = await http
       .get(Uri.parse(
         'https://hsreplay.net/api/v1/collection/?region=2&account_lo=145926188&type=CONSTRUCTED'),
         headers: {
-          "cookie": "sessionid=349urrtf4suoy4g5kfds8sqbpf8t4ndn", 
+          "cookie": "sessionid=$session", 
         });
-
   if (response.statusCode == 200) {
     var json = jsonDecode(response.body) as Map<String, dynamic>;
     return CollectionData.fromJson(json);
   } else {
-    throw Exception('Failed to load album');
+    throw Exception('Failed to load collection');
   }
 }
 

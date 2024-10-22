@@ -19,11 +19,19 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
   Future<Summary>? futureSummary;
   final cacheManager = DefaultCacheManager();
   final cacheKey = 'hearthstoneKey';
+  String session = "";
+  final myController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+    getSession();
     futureSummary = loadSummary();
+  }
+  @override
+  void dispose() {
+    myController.dispose();
+    super.dispose();
   }
 
   Future<void> _pullRefresh() async {
@@ -33,15 +41,36 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
     });
   }
 
+  Future<void> getSession() async{
+    var fileInfo = await cacheManager.getFileFromCache('sessionKey');
+    if (fileInfo != null) {
+      final cachedData = await fileInfo.file.readAsString();
+      var res = jsonDecode(cachedData);
+      setState(() {
+        session = res;
+        myController.text = session;
+    });
+    }
+  }
+  _saveSession()  {
+    cacheManager.putFile(
+      'sessionKey',
+      utf8.encode(jsonEncode(myController.text)),
+      fileExtension: 'json',);
+    setState(() {
+      session = myController.text;
+    });
+  }
+
   Future<Summary>? loadSummary({bool forceRefresh = false}) async {
     if(forceRefresh)
-      return await fetchSummary();
+      return await fetchSummary(session);
     var fileInfo = await cacheManager.getFileFromCache(cacheKey);
     if (fileInfo != null) {
       final cachedData = await fileInfo.file.readAsString();
       return Summary.fromJson(jsonDecode(cachedData));
     }
-    return await fetchSummary();
+    return await fetchSummary(session);
   }
 
   @override
@@ -49,6 +78,13 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Years'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.edit_notifications_outlined),
+            tooltip: 'Change session',
+            onPressed: () => _dialogBuilder(context),
+          ),
+        ]
       ),
       body: Center(
         child: FutureBuilder<Summary>(
@@ -133,6 +169,35 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
           ),
         ),
       );
+  }
+  Future<void> _dialogBuilder(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('HS Replay session'),
+          content: const Text(
+            'Please type your HS replay session id.',
+          ),
+          actions: <Widget>[
+            TextField(
+              controller: myController,
+              
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Save'),
+              onPressed: () {
+                _saveSession();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   int getSum(List<MapEntry<String, Expansion>> expansions){

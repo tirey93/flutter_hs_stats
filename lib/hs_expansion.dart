@@ -15,7 +15,7 @@ class _HearthstoneExpansionPageState extends State<HearthstoneExpansionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Expansions'),
+        title: Text(widget.expansion.firstOrNull!.value.yearName),
       ),
       body: ListView.builder(
         itemCount: widget.expansion.length,
