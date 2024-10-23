@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:hs_stats/data/expansion.dart';
 import 'package:hs_stats/pages/expansion_page.dart';
@@ -26,7 +27,7 @@ class _YearCardState extends State<YearCard> {
       elevation: 10,
       surfaceTintColor: widget.color,
       child: InkWell(
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => HearthstoneExpansionPage(widget.expansions, widget.color))),
+        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => HearthstoneExpansionPage(sortByMonth, widget.color))),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -65,4 +66,7 @@ class _YearCardState extends State<YearCard> {
       ),
     );
   }
+
+  List<MapEntry<String, Expansion>> get sortByMonth 
+    => widget.expansions.sorted((a, b) => -a.value.releaseMonth!.compareTo(b.value.releaseMonth ?? 0));
 }
