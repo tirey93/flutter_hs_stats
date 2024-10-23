@@ -7,6 +7,8 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:hs_stats/Data/summary.dart';
 import 'package:hs_stats/hs_expansion.dart';
 import 'package:hs_stats/widgets/expansion_card.dart';
+import 'package:hs_stats/widgets/info_dialog.dart';
+import 'package:hs_stats/widgets/session_input_dialog.dart';
 import 'package:intl/intl.dart';
 
 class HearthstoneYearsPage extends StatefulWidget {
@@ -23,18 +25,12 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
   String session = "";
   String infoDust = "";
   String infoDateModified = "";
-  final myController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     getSession();
     futureSummary = loadSummary();
-  }
-  @override
-  void dispose() {
-    myController.dispose();
-    super.dispose();
   }
 
   Future<void> _pullRefresh() async {
@@ -50,16 +46,14 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
       var res = jsonDecode(cachedData);
       setState(() {
         session = res;
-        myController.text = session;
     });
     }
   }
-  _saveSession()  {
+  _saveSession(String session)  {
     cacheManager.putFile(
       'sessionKey',
-      utf8.encode(jsonEncode(myController.text)),
+      utf8.encode(jsonEncode(session)),
       fileExtension: 'json',);
-    session = myController.text;
     _pullRefresh();
   }
 
@@ -201,28 +195,13 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('HS Replay session'),
-          content: const Text(
-            'Please type your HS replay session id.',
-          ),
-          actions: <Widget>[
-            TextField(
-              controller: myController,
-              
-            ),
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('Save'),
-              onPressed: () {
-                _saveSession();
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
+        return SessionInputDialog(initialSession: session, 
+          onSave: (newSession) => {
+            setState(() {
+              session = newSession;
+              _saveSession(session);
+            })
+          });
       },
     );
   }
@@ -230,38 +209,7 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
   return showDialog<void>(
     context: context,
     builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Info'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              title: Row(
-                children: [
-                  Expanded(flex: 3, child: const Text("Rares")),
-                  Expanded(flex: 2, child: Text('')),
-                  Expanded(flex: 4, child: Text(infoDust)),
-                ],
-              ),
-            ),
-            ListTile(
-                title: Row(
-                  children: [
-                    Expanded(flex: 3, child: const Text("Last modified")),
-                    Expanded(flex: 2, child: Text('')),
-                    Expanded(flex: 4, child: Text(infoDateModified)),
-                  ],
-                ),
-              ),
-          ],
-        ),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('OK'),
-          ),
-        ],
-      );
+      return InfoDialog(infoDust: infoDust, infoDateModified: infoDateModified);
     },
   );
 }
