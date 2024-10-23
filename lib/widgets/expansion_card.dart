@@ -38,27 +38,27 @@ class _ExpansionCardState extends State<ExpansionCard> {
               children: [
                 TableRow(children: [
                   Center(child: Padding(padding: EdgeInsets.all(5), child: Text(''))),
-                  Center(child: Padding(padding: EdgeInsets.fromLTRB(0, 5, 0, 5), child: Text('Common'))),
-                  Center(child: Padding(padding: EdgeInsets.fromLTRB(0, 5, 0, 5), child: Text('Rare'))),
-                  Center(child: Padding(padding: EdgeInsets.fromLTRB(0, 5, 0, 5), child: Text('Epic'))),
                   Center(child: Padding(padding: EdgeInsets.fromLTRB(0, 5, 0, 5), child: Text('Legendary'))),
+                  Center(child: Padding(padding: EdgeInsets.fromLTRB(0, 5, 0, 5), child: Text('Epic'))),
+                  Center(child: Padding(padding: EdgeInsets.fromLTRB(0, 5, 0, 5), child: Text('Rare'))),
+                  Center(child: Padding(padding: EdgeInsets.fromLTRB(0, 5, 0, 5), child: Text('Common'))),
                 ]),
                 TableRow(
                   children: [
                     Center(child: Padding(padding: EdgeInsets.all(5), child: Text('Normal'))),
-                    Center(child: Padding(padding: EdgeInsets.all(5), child: Text(''))),
-                    Center(child: Padding(padding: EdgeInsets.all(5), child: Text(widget.expansion.rarities['RARE']!.getNormalCount().toString()))),
-                    Center(child: Padding(padding: EdgeInsets.all(5), child: Text(widget.expansion.rarities['EPIC']!.getNormalCount().toString()))),
                     Center(child: Padding(padding: EdgeInsets.all(5), child: Text(widget.expansion.rarities['LEGENDARY']!.getNormalCount().toString()))),
+                    Center(child: Padding(padding: EdgeInsets.all(5), child: Text(widget.expansion.rarities['EPIC']!.getNormalCount().toString()))),
+                    Center(child: Padding(padding: EdgeInsets.all(5), child: Text(widget.expansion.rarities['RARE']!.getNormalCount().toString()))),
+                    Center(child: Padding(padding: EdgeInsets.all(5), child: Text(''))),
                   ],
                 ),
                 TableRow(
                   children: [
                     Center(child: Padding(padding: EdgeInsets.all(5), child: Text('Golden'))),
-                    Center(child: Padding(padding: EdgeInsets.all(5), child: Text(widget.expansion.rarities['COMMON']!.getPremiumCount().toString()))),
-                    Center(child: Padding(padding: EdgeInsets.all(5), child: Text(widget.expansion.rarities['RARE']!.getPremiumCount().toString()))),
-                    Center(child: Padding(padding: EdgeInsets.all(5), child: Text(widget.expansion.rarities['EPIC']!.getPremiumCount().toString()))),
                     Center(child: Padding(padding: EdgeInsets.all(5), child: Text(widget.expansion.rarities['LEGENDARY']!.getPremiumCount().toString()))),
+                    Center(child: Padding(padding: EdgeInsets.all(5), child: Text(widget.expansion.rarities['EPIC']!.getPremiumCount().toString()))),
+                    Center(child: Padding(padding: EdgeInsets.all(5), child: Text(widget.expansion.rarities['RARE']!.getPremiumCount().toString()))),
+                    Center(child: Padding(padding: EdgeInsets.all(5), child: Text(widget.expansion.rarities['COMMON']!.getPremiumCount().toString()))),
                   ],
                 ),
               ],
