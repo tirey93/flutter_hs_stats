@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hs_stats/data/summary.dart';
+import 'package:hs_stats/data/expansion.dart';
 
 class ExpansionCard extends StatefulWidget {
   final Expansion expansion;

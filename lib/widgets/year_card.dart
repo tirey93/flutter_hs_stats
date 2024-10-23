@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hs_stats/data/summary.dart';
+import 'package:hs_stats/data/expansion.dart';
 import 'package:hs_stats/hs_expansion.dart';
 
 class YearCard extends StatefulWidget {
