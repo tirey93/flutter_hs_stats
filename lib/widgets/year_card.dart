@@ -31,15 +31,12 @@ class _YearCardState extends State<YearCard> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(2, 10, 2, 10),
-              child: Table(
-                columnWidths: {0: FixedColumnWidth(200)},
+              padding: const EdgeInsets.all(10),
+              child: Row(
                 children: [
-                  TableRow(children: [
-                    Padding(padding: EdgeInsets.all(8), child: Text(widget.expansions.firstOrNull!.value.yearName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),),
-                    Padding(padding: EdgeInsets.all(8), child: Text(getSum(widget.expansions).toString())),
-                    Padding(padding: EdgeInsets.all(8), child: Text((getSum(widget.expansions) / 12).toStringAsFixed(2))),
-                  ]),
+                  Expanded(flex: 4, child: Text(widget.expansions.firstOrNull!.value.yearName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),),
+                  Expanded(flex: 1, child: Text(getSum(widget.expansions).toString())),
+                  Expanded(flex: 1, child: Text((getSum(widget.expansions) / 12).toStringAsFixed(2))),
                 ],
               ),
             ),

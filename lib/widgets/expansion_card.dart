@@ -21,15 +21,12 @@ class _ExpansionCardState extends State<ExpansionCard> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.fromLTRB(2, 10, 2, 10),
-            child: Table(
-              columnWidths: {0: FixedColumnWidth(200)},
+            padding: const EdgeInsets.all(10),
+            child: Row(
               children: [
-                TableRow(children: [
-                  Padding(padding: EdgeInsets.all(8), child: Text(getName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),),
-                  Padding(padding: EdgeInsets.all(8), child: Text(widget.expansion.sumAll().toString())),
-                  getAvarage(widget.expansion.releaseYear),
-                ]),
+                Expanded(flex: 4, child: Text(getName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),),
+                Expanded(flex: 1, child: Text(widget.expansion.sumAll().toString())),
+                getAvarage(widget.expansion.releaseYear),
               ],
             ),
           ),
@@ -80,7 +77,7 @@ class _ExpansionCardState extends State<ExpansionCard> {
 
   Widget getAvarage(int? releaseYear) {
     if (releaseYear == null)
-      return Padding(padding: EdgeInsets.all(8), child: Text((widget.expansion.sumAll() / getMonths()).toStringAsFixed(2)));
+      return Expanded(flex: 1, child: Text((widget.expansion.sumAll() / getMonths()).toStringAsFixed(2)));
     return Text('');
   }
 
