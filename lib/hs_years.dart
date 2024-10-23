@@ -38,9 +38,8 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
   }
 
   Future<void> _pullRefresh() async {
-    var summary = loadSummary(forceRefresh: true);
     setState(() {
-      futureSummary = Future.value(summary);
+      futureSummary = loadSummary(forceRefresh: true);
     });
   }
 
@@ -61,7 +60,7 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
       utf8.encode(jsonEncode(myController.text)),
       fileExtension: 'json',);
     session = myController.text;
-    futureSummary = loadSummary();
+    _pullRefresh();
   }
 
   Future<Summary>? loadSummary({bool forceRefresh = false}) async {
@@ -228,33 +227,44 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
     );
   }
   Future<void> _dialogInfo(BuildContext context) {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Info'),
-          actions: <Widget>[
-            Table(
-              children: [
-                TableRow(
-                  children: [
-                    Text("Rares"),
-                    Text(infoDust),
-                  ]
-                ),
-                TableRow(
-                  children: [
-                    Text("Last modified"),
-                    Text(infoDateModified),
-                  ]
-                ),
-              ],
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Info'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: Row(
+                children: [
+                  Expanded(flex: 3, child: const Text("Rares")),
+                  Expanded(flex: 2, child: Text('')),
+                  Expanded(flex: 4, child: Text(infoDust)),
+                ],
+              ),
             ),
+            ListTile(
+                title: Row(
+                  children: [
+                    Expanded(flex: 3, child: const Text("Last modified")),
+                    Expanded(flex: 2, child: Text('')),
+                    Expanded(flex: 4, child: Text(infoDateModified)),
+                  ],
+                ),
+              ),
           ],
-        );
-      },
-    );
-  }
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('OK'),
+          ),
+        ],
+      );
+    },
+  );
+}
 
   int getSum(List<MapEntry<String, Expansion>> expansions){
     int result = 0;
