@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hs_stats/hs_years.dart';
+import 'package:hs_stats/pages/years_page.dart';
 
 void main() {
   runApp(const MainApp());

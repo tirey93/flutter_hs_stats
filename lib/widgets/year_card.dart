@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hs_stats/data/expansion.dart';
-import 'package:hs_stats/hs_expansion.dart';
+import 'package:hs_stats/pages/expansion_page.dart';
 
 class YearCard extends StatefulWidget {
   final List<MapEntry<String, Expansion>> expansions;
