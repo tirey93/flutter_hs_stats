@@ -9,6 +9,7 @@ import 'package:hs_stats/hs_expansion.dart';
 import 'package:hs_stats/widgets/expansion_card.dart';
 import 'package:hs_stats/widgets/info_dialog.dart';
 import 'package:hs_stats/widgets/session_input_dialog.dart';
+import 'package:hs_stats/widgets/year_card.dart';
 import 'package:intl/intl.dart';
 
 class HearthstoneYearsPage extends StatefulWidget {
@@ -106,7 +107,6 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
                   ],
                 );
               }
-              
               return const Text('');
             },
           ),
@@ -139,56 +139,8 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
         } 
         var yearSorted = year.sorted((a, b) => a.value.releaseMonth!.compareTo(b.value.releaseMonth!));
     
-        return drawCard(yearSorted, colors[index]);
+        return YearCard(expansions: yearSorted,color: colors[index]);
       });
-  }
-
-  Card drawCard(List<MapEntry<String, Expansion>> expansions, Color color) {
-    return Card(
-        elevation: 10,
-        surfaceTintColor: color,
-        child: InkWell(
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => HearthstoneExpansionPage(expansions, color))),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(2, 10, 2, 10),
-                child: Table(
-                  columnWidths: {0: FixedColumnWidth(200)},
-                  children: [
-                    TableRow(children: [
-                      Padding(padding: EdgeInsets.all(8), child: Text(expansions.firstOrNull!.value.yearName, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),),
-                      Padding(padding: EdgeInsets.all(8), child: Text(getSum(expansions).toString())),
-                      Padding(padding: EdgeInsets.all(8), child: Text((getSum(expansions) / 12).toStringAsFixed(2))),
-                    ]),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(2, 10, 2, 10),
-                child: Table(
-                  border: TableBorder.all(width: 1),
-                  children: [
-                    TableRow(children: [
-                      Center(child: Padding(padding: EdgeInsets.all(5), child: Text(expansions[0].value.shortName))),
-                      Center(child: Padding(padding: EdgeInsets.all(5), child: Text(expansions[1].value.shortName))),
-                      Center(child: Padding(padding: EdgeInsets.all(5), child: Text(expansions[2].value.shortName))),
-                    ]),
-                    TableRow(
-                      children: [
-                        Center(child: Padding(padding: EdgeInsets.all(5), child: Text(expansions[0].value.sumAll().toString()))),
-                        Center(child: Padding(padding: EdgeInsets.all(5), child: Text(expansions[1].value.sumAll().toString()))),
-                        Center(child: Padding(padding: EdgeInsets.all(5), child: Text(expansions[2].value.sumAll().toString()))),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
   }
   
   Future<void> _dialogSession(BuildContext context) {
@@ -213,12 +165,4 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
     },
   );
 }
-
-  int getSum(List<MapEntry<String, Expansion>> expansions){
-    int result = 0;
-    for (var expansion in expansions) {
-      result += expansion.value.sumAll();
-    }
-    return result;
-  }
 }
