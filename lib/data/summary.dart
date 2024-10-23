@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:hs_stats/data/card.dart';
 import 'package:hs_stats/data/collection.dart';
+import 'package:hs_stats/data/expansion.dart';
 
 Future<Summary> fetchSummary(String session) async {
   var collectionFuture = fetchCollection(session);
@@ -74,7 +75,6 @@ class Summary {
       }
     });
   }
-
   Map<String, dynamic> toJson() {
     final map = expansions.map((key, value) => MapEntry(key, value.toJson()));
     if (additionalInfo != null) {
@@ -83,102 +83,6 @@ class Summary {
     return map;
   }
 }
-
-class Expansion {
-  final String fullName;
-  final String yearName;
-  final String shortName;
-  int? releaseYear;
-  int? releaseMonth;
-
-  Expansion(this.fullName, this.yearName, this.shortName, this.releaseYear, this.releaseMonth);
-  
-  final Map<String, Rarity> rarities = {
-    "COMMON": Rarity("Common", 0, 2),
-    "RARE": Rarity("Rare", 1, 5),
-    "EPIC": Rarity("Epic", 5, 20),
-    "LEGENDARY": Rarity("Legendary", 20, 80),
-  };
-
-  int sumAll() {
-    int result = 0;
-    for (var rarity in rarities.entries) {
-      result += rarity.value.getNormalCost();
-      result += rarity.value.getPremiumCost();
-    }
-    return result;
-  }
-
-  Expansion.fromJson(Map<String, dynamic> json)
-      : fullName = json['fullName'],
-        yearName = json['yearName'],
-        shortName = json['shortName'],
-        releaseYear = json['releaseYear'],
-        releaseMonth = json['releaseMonth'] {
-    rarities.clear(); // Ensure rarities are cleared before loading from JSON
-    (json['rarities'] as Map<String, dynamic>?)?.forEach((key, value) {
-      rarities[key] = Rarity.fromJson(value);
-    });
-  }
-
-  Map<String, dynamic> toJson() => {
-      'fullName': fullName,
-      'yearName': yearName,
-      'shortName': shortName,
-      'releaseYear': releaseYear,
-      'releaseMonth': releaseMonth,
-      'rarities': rarities.map((key, value) => MapEntry(key, value.toJson())),
-    };
-}
-
-class Rarity {
-  final String id;
-  final int normalCost;
-  final int premiumCost;
-
-  Map<String, int> qualities = {
-    "regular": 0,
-    "golden": 0,
-    "diamond": 0,
-    "signature": 0
-  };
-
-  Rarity(this.id, this.normalCost, this.premiumCost);
-
-  void increment(bool normalCollectible, bool goldenCollectible, Map<String, int> qualities){
-    if (normalCollectible)
-      this.qualities["regular"] = this.qualities["regular"]! + qualities["regular"]!;
-    for (var quality in qualities.entries.where((x) => x.key != "regular" && goldenCollectible)) {
-      this.qualities[quality.key] = this.qualities[quality.key]! + quality.value;
-    }
-  }
-  int getNormalCost() => qualities['regular']! * normalCost;
-  int getNormalCount() => qualities['regular']!;
-  int getPremiumCost() => (qualities['golden']! + qualities['signature']!) * premiumCost;
-  int getPremiumCount() => qualities['golden']! + qualities['signature']!;
-
-  Rarity.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        normalCost = json['normalCost'],
-        premiumCost = json['premiumCost'],
-        qualities = Map<String, int>.from(json['qualities']);
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'normalCost': normalCost,
-        'premiumCost': premiumCost,
-        'qualities': qualities,
-      };
-}
-
-
-
-
-
-
-
-
-
 
 void subtractUncollectibleSignature(Summary summary){
   var toSubtracts = {

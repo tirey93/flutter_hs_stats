@@ -1,11 +1,9 @@
-
 import 'dart:convert';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:hs_stats/Data/summary.dart';
-import 'package:hs_stats/hs_expansion.dart';
+import 'package:hs_stats/data/summary.dart';
 import 'package:hs_stats/widgets/expansion_card.dart';
 import 'package:hs_stats/widgets/info_dialog.dart';
 import 'package:hs_stats/widgets/session_input_dialog.dart';
@@ -34,12 +32,6 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
     futureSummary = loadSummary();
   }
 
-  Future<void> _pullRefresh() async {
-    setState(() {
-      futureSummary = loadSummary(forceRefresh: true);
-    });
-  }
-
   Future<void> getSession() async{
     var fileInfo = await cacheManager.getFileFromCache('sessionKey');
     if (fileInfo != null) {
@@ -49,6 +41,12 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
         session = res;
     });
     }
+  }
+
+  Future<void> _pullRefresh() async {
+    setState(() {
+      futureSummary = loadSummary(forceRefresh: true);
+    });
   }
   _saveSession(String session)  {
     cacheManager.putFile(
@@ -158,11 +156,11 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
     );
   }
   Future<void> _dialogInfo(BuildContext context) {
-  return showDialog<void>(
-    context: context,
-    builder: (BuildContext context) {
-      return InfoDialog(infoDust: infoDust, infoDateModified: infoDateModified);
-    },
-  );
-}
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return InfoDialog(infoDust: infoDust, infoDateModified: infoDateModified);
+      },
+    );
+  }
 }

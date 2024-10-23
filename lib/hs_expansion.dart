@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hs_stats/Data/summary.dart';
+import 'package:hs_stats/data/summary.dart';
 import 'package:hs_stats/widgets/expansion_card.dart';
 
 class HearthstoneExpansionPage extends StatefulWidget {
@@ -24,6 +24,7 @@ class _HearthstoneExpansionPageState extends State<HearthstoneExpansionPage> {
           final expansion = widget.expansion[index].value;
           if (expansion.sumAll() > 0)
             return ExpansionCard(expansion: expansion, color: widget.color);
+          return Text('');
         })
     );
   }
