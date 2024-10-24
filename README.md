@@ -1,3 +1,6 @@
+
+![alt text](https://github.com/tirey93/flutter_hs_stats/blob/main/assets/demo.png?raw=true)
+
 # HS Stats
 
 This is mobile app for checking Hearthstone stats.
