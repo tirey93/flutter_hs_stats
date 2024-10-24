@@ -1,3 +1,27 @@
-# hs_stats
+# HS Stats
 
-A new Flutter project.
+This is mobile app for checking Hearthstone stats.
+Stats includes:
+- Number of collectible cards in player's collection
+- Sum of dust("rares" in fact*) for each year and for each expansion
+- Sum of "rares" in whole wild
+- Average number of "rares"* in each year
+- Average number of "rares"* in remaing current wild(e.x. if in current wild 5 months remains to next rotation it divides sum of all wild collectible cards by 5)
+
+*By "rares" I mean my own stat currency. Rare is worth 20 dust.
+1 legendary card = 20 rare cards = 4 epic cards
+1 golden legendary card = 4 golden epic cards = 16 rare golden cards = 40 golden normal cards = 4 legendary cards
+
+In order to make this app work you need:
+- Android phone with system version > 5.0
+- Battle.net account and Hearthstone installed on your PC
+- HSReplay free account
+
+# Setting up session id
+In order to make this app work you need to provide it session id of your HSReplay account. 
+Instruction how to get it:
+- make sure you are login to HSReplay which is combined to your Battle.net account 
+- open DevTools(F12) and Network tab
+- go to: https://hsreplay.net/collection/mine/
+- as you can see in the screenshot(), filter by Fetch/XHR choose "collection" endpoint and on the "Cookies" window find "sessionid" - this is what you need to enter in the app
+
