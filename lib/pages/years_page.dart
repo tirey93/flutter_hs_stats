@@ -80,8 +80,8 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
           ),
           IconButton(
             icon: const Icon(Icons.edit_outlined),
-            tooltip: 'Change session',
-            onPressed: () => _dialogSession(context),
+            tooltip: 'Change auth',
+            onPressed: () => _dialogAuth(context),
           ),
         ]
       ),
@@ -149,7 +149,7 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
       });
   }
   
-  Future<void> _dialogSession(BuildContext context) {
+  Future<void> _dialogAuth(BuildContext context) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
