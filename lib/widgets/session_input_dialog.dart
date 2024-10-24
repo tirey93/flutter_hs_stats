@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hs_stats/data/collection.dart';
 
 class SessionInputDialog extends StatefulWidget {
-  final String initialSession;
-  final Function(String) onSave;
+  final Auth initialAuth;
+  final Function(Auth) onSave;
 
   const SessionInputDialog({
     super.key,
-    required this.initialSession,
+    required this.initialAuth,
     required this.onSave,
   });
 
@@ -15,31 +16,56 @@ class SessionInputDialog extends StatefulWidget {
 }
 
 class _SessionInputDialogState extends State<SessionInputDialog> {
-  late TextEditingController _textController;
-
+  late TextEditingController _sessionController;
+  late TextEditingController _loginController;
   @override
   void dispose() {
-    _textController.dispose();
+    _sessionController.dispose();
+    _loginController.dispose();
     super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
-    _textController = TextEditingController(text: widget.initialSession);
+    _loginController = TextEditingController(text: widget.initialAuth.login);
+    _sessionController = TextEditingController(text: widget.initialAuth.session);
   }
   
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('HS Replay session'),
-      content: const Text(
-        'Please type your HS replay session id.',
+      title: const Text('HS Replay authentication'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Please type your HSReplay info',
+          ),
+          const Text(
+            'Don\'t know how? Check the manual on',
+          ),
+          const Text(
+            'github.com/tirey93/flutter_hs_stats',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ],
       ),
       actions: <Widget>[
         TextField(
-          controller: _textController,
-          
+          controller: _loginController,
+          decoration: InputDecoration(
+            labelText: 'account_lo',
+            hintText: 'Enter account_lo'
+          ),
+        ),
+        TextField(
+          controller: _sessionController,
+          decoration: InputDecoration(
+            labelText: 'sessionid',
+            hintText: 'Enter sessionid'
+          ),
         ),
         TextButton(
           style: TextButton.styleFrom(
@@ -47,7 +73,7 @@ class _SessionInputDialogState extends State<SessionInputDialog> {
           ),
           child: const Text('Save'),
           onPressed: () {
-            widget.onSave(_textController.text);
+            widget.onSave(Auth(login: _loginController.text, session: _sessionController.text));
             Navigator.of(context).pop();
           },
         ),

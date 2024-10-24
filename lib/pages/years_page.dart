@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:hs_stats/data/collection.dart';
 import 'package:hs_stats/data/summary.dart';
 import 'package:hs_stats/widgets/expansion_card.dart';
 import 'package:hs_stats/widgets/info_dialog.dart';
@@ -21,24 +22,23 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
   Future<Summary>? futureSummary;
   final cacheManager = DefaultCacheManager();
   final cacheKey = 'hearthstoneKey';
-  String session = "";
+  Auth? auth;
   String infoDust = "";
   String infoDateModified = "";
 
   @override
   void initState() {
     super.initState();
-    getSession();
+    getAuth();
     futureSummary = loadSummary();
   }
 
-  Future<void> getSession() async{
-    var fileInfo = await cacheManager.getFileFromCache('sessionKey');
+  Future<void> getAuth() async{
+    var fileInfo = await cacheManager.getFileFromCache('authKey');
     if (fileInfo != null) {
       final cachedData = await fileInfo.file.readAsString();
-      var res = jsonDecode(cachedData);
       setState(() {
-        session = res;
+        auth = Auth.fromJson(jsonDecode(cachedData));
     });
     }
   }
@@ -48,23 +48,23 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
       futureSummary = loadSummary(forceRefresh: true);
     });
   }
-  _saveSession(String session)  {
+  _saveSession(Auth auth)  {
     cacheManager.putFile(
-      'sessionKey',
-      utf8.encode(jsonEncode(session)),
+      'authKey',
+      utf8.encode(jsonEncode(auth)),
       fileExtension: 'json',);
     _pullRefresh();
   }
 
   Future<Summary>? loadSummary({bool forceRefresh = false}) async {
     if(forceRefresh)
-      return await fetchSummary(session);
+      return await fetchSummary(auth!);
     var fileInfo = await cacheManager.getFileFromCache(cacheKey);
     if (fileInfo != null) {
       final cachedData = await fileInfo.file.readAsString();
       return Summary.fromJson(jsonDecode(cachedData));
     }
-    return await fetchSummary(session);
+    return await fetchSummary(auth!);
   }
 
   @override
@@ -98,6 +98,14 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
                 var summary = snapshot.data!;
                 return drawSummary(summary);
               } else if (snapshot.hasError) {
+                if (auth == null){
+                  return Column(
+                    children: [
+                      Text('Please setup your authentication'),
+                      TextButton(onPressed: _pullRefresh, child: const Text('Refresh'),),
+                    ]
+                  );
+                }
                 return Column(
                   children: [
                     Text('${snapshot.error}'),
@@ -145,11 +153,11 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return SessionInputDialog(initialSession: session, 
-          onSave: (newSession) => {
+        return SessionInputDialog(initialAuth: auth ?? Auth(), 
+          onSave: (newAuth) => {
             setState(() {
-              session = newSession;
-              _saveSession(session);
+              auth = newAuth;
+              _saveSession(auth!);
             })
           });
       },

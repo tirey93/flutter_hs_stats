@@ -3,12 +3,12 @@ import 'package:http/http.dart' as http;
 import 'package:collection/collection.dart';
 import 'package:intl/intl.dart';
 
-Future<CollectionData> fetchCollection(String session) async {
+Future<CollectionData> fetchCollection(Auth auth) async {
   final response = await http
       .get(Uri.parse(
-        'https://hsreplay.net/api/v1/collection/?region=2&account_lo=145926188&type=CONSTRUCTED'),
+        'https://hsreplay.net/api/v1/collection/?region=2&account_lo=${auth.login}&type=CONSTRUCTED'),
         headers: {
-          "cookie": "sessionid=$session", 
+          "cookie": "sessionid=${auth.session}", 
         });
   if (response.statusCode == 200) {
     var json = jsonDecode(response.body) as Map<String, dynamic>;
@@ -72,5 +72,26 @@ class CollectionEntry{
         "signature": values[3],
       };
     }
+  }
+}
+
+class Auth {
+  String login = "";
+  String session = "";
+
+  Auth({this.login = "", this.session = ""});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'login': login,
+      'session': session,
+    };
+  }
+
+  static Auth fromJson(Map<String, dynamic> json) {
+    return Auth(
+      login: json['login'] as String,
+      session: json['session'] as String,
+    );
   }
 }

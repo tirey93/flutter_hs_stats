@@ -5,8 +5,8 @@ import 'package:hs_stats/data/card.dart';
 import 'package:hs_stats/data/collection.dart';
 import 'package:hs_stats/data/expansion.dart';
 
-Future<Summary> fetchSummary(String session) async {
-  var collectionFuture = fetchCollection(session);
+Future<Summary> fetchSummary(Auth auth) async {
+  var collectionFuture = fetchCollection(auth);
   var cardsFuture = fetchCards();
   late CollectionData collection;
   late CardsData cards;

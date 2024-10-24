@@ -17,11 +17,13 @@ In order to make this app work you need:
 - Battle.net account and Hearthstone installed on your PC
 - HSReplay free account
 
-# Setting up session id
+# Setting up HSReplay info
 In order to make this app work you need to provide it session id of your HSReplay account. 
 Instruction how to get it:
 - make sure you are login to HSReplay which is combined to your Battle.net account 
 - open DevTools(F12) and Network tab
 - go to: https://hsreplay.net/collection/mine/
-- as you can see in the screenshot(), filter by Fetch/XHR choose "collection" endpoint and on the "Cookies" window find "sessionid" - this is what you need to enter in the app
+- as you can see in the screenshot([link](https://pages.github.com/)), filter by Fetch/XHR and find "collection" endpoint 
+- in the URL of the endpoint(collection/?region...) copy **account_lo** and enter it to the app
+- on the "Cookies" window find **sessionid** - this is what you need to enter in the app
 
