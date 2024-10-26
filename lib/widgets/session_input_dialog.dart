@@ -46,9 +46,8 @@ class _SessionInputDialogState extends State<SessionInputDialog> {
           const Text(
             'Don\'t know how? Check the manual on',
           ),
-          const Text(
-            'github.com/tirey93/flutter_hs_stats',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          SelectableText(
+            "https://github.com/tirey93/flutter_hs_stats"
           ),
         ],
       ),

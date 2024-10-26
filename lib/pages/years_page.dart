@@ -93,8 +93,7 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const CircularProgressIndicator(); 
-              }
-              else if (snapshot.hasData) {    
+              } else if (snapshot.hasData) {    
                 var summary = snapshot.data!;
                 return drawSummary(summary);
               } else if (snapshot.hasError) {
@@ -102,7 +101,7 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
                   return Column(
                     children: [
                       Text('Please setup your authentication'),
-                      TextButton(onPressed: _pullRefresh, child: const Text('Refresh'),),
+                      TextButton(onPressed: () => _dialogAuth(context), child: const Text('Setup'),),
                     ]
                   );
                 }
