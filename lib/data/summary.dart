@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:hs_stats/data/card.dart';
 import 'package:hs_stats/data/collection.dart';
@@ -19,11 +20,30 @@ Future<Summary> fetchSummary(Auth auth) async {
   var summary = Summary(collection.additionalInfo);
   for (var entry in collection.collection) {
     var card = cards.cards[entry.cardId];
+
     if (card != null){
       if (summary.expansions.containsKey(card.set)){      
+        var sumOfRegularInPosses = entry.qualities.entries
+          .where((x) => x.key == "regular")
+          .map((x) => x.value)
+          .sum;
+        
+        if(card.set == "BATTLE_OF_THE_BANDS" && card.rarity == "COMMON" && sumOfRegularInPosses > 0){
+          int a = 5;
+        }
+
+
         summary.incrementStandard(card, entry.qualities);
       }
       else{
+        var sumOfRegularInPosses = entry.qualities.entries
+          .where((x) => x.key == "regular")
+          .map((x) => x.value)
+          .sum;
+        if(card.rarity == "LEGENDARY" && sumOfRegularInPosses > 0 && card.normalCollectible){
+          // print(card.name);
+        }
+
         summary.incrementWild(card, entry.qualities);
       }
     }
@@ -45,7 +65,7 @@ class Summary {
   final Map<String, Expansion> expansions = {
   "WHIZBANGS_WORKSHOP": Expansion("Whizbang's Workshop", "Year of the Pegasus", "Whizbang", 2024, 3),
   "ISLAND_VACATION": Expansion("Perils in Paradise", "Year of the Pegasus", "Perils", 2024, 7),
-  "_EXP3": Expansion("???", "Year of the Pegasus", "???", 2024, 11),
+  "SPACE": Expansion("Great Dark Beyond", "Year of the Pegasus", "Beyond", 2024, 11),
 
   "BATTLE_OF_THE_BANDS": Expansion("Festival of Legends", "Year of the Wolf", "Festival", 2023, 4),
   "TITANS": Expansion("Titans", 'Year of the Wolf', "Titans", 2023, 8),

@@ -71,7 +71,7 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Years'),
+        title: const Text('HS Stats'),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.info_outline),
