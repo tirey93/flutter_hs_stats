@@ -5,6 +5,7 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:hs_stats/data/card.dart';
 import 'package:hs_stats/data/collection.dart';
 import 'package:hs_stats/data/expansion.dart';
+import 'package:hs_stats/config.dart' as cfg;
 
 Future<Summary> fetchSummary(Auth auth) async {
   var collectionFuture = fetchCollection(auth);
@@ -62,17 +63,7 @@ Future<Summary> fetchSummary(Auth auth) async {
 
 class Summary {
   AdditionalInfo? additionalInfo;
-  final Map<String, Expansion> expansions = {
-  "WHIZBANGS_WORKSHOP": Expansion("Whizbang's Workshop", "Year of the Pegasus", "Whizbang", 2024, 3),
-  "ISLAND_VACATION": Expansion("Perils in Paradise", "Year of the Pegasus", "Perils", 2024, 7),
-  "SPACE": Expansion("Great Dark Beyond", "Year of the Pegasus", "Beyond", 2024, 11),
-
-  "BATTLE_OF_THE_BANDS": Expansion("Festival of Legends", "Year of the Wolf", "Festival", 2023, 4),
-  "TITANS": Expansion("Titans", 'Year of the Wolf', "Titans", 2023, 8),
-  "WILD_WEST": Expansion("Showdown in the Badlands", "Year of the Wolf", "Badlands", 2023, 11),
-
-  "WILD": Expansion("Wild", 'Wild', "Wild", null, null),
-  };
+  final Map<String, Expansion> expansions = cfg.Config.expansions;
 
   void incrementStandard(CardEntry card, Map<String, int> qualities)
   => expansions[card.set]
@@ -105,26 +96,7 @@ class Summary {
 }
 
 void subtractUncollectibleSignature(Summary summary){
-  var toSubtracts = {
-    //always check if golden copy of card is collectible!
-    "ISLAND_VACATION.COMMON": 4,
-    "ISLAND_VACATION.RARE": 2,
-    "ISLAND_VACATION.EPIC": 2,
-
-    "WHIZBANGS_WORKSHOP.COMMON": 4,
-    "WHIZBANGS_WORKSHOP.RARE": 0,
-    "WHIZBANGS_WORKSHOP.EPIC": 4,
-
-    "WILD_WEST.COMMON": 2,
-    "WILD_WEST.RARE": 2,
-    "WILD_WEST.EPIC": 4,
-
-    "TITANS.COMMON": 4,
-    "TITANS.RARE": 4,
-    "TITANS.EPIC": 2,
-
-    "BATTLE_OF_THE_BANDS.COMMON": 4,
-  };
+  var toSubtracts = cfg.Config.uncollectibleSignatures;
 
   for (var subtraction in toSubtracts.entries) {
     var expansion = subtraction.key.split('.')[0];
@@ -137,11 +109,7 @@ void subtractUncollectibleSignature(Summary summary){
 }
 
 void subtractUncollectibleInWild(Summary summary){
-  var toSubtracts = {
-    "COMMON.signature": 2,
-    "LEGENDARY.regular": 5,
-    "LEGENDARY.golden": 1,
-  };
+  var toSubtracts = cfg.Config.uncollectibleInWild;
 
   for (var subtraction in toSubtracts.entries) {
     var expansion = 'WILD';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hs_stats/config.dart';
 import 'package:hs_stats/data/expansion.dart';
 
 class ExpansionCard extends StatefulWidget {
@@ -83,7 +84,7 @@ class _ExpansionCardState extends State<ExpansionCard> {
 
   int getMonths() {
     var now = DateTime.now();
-    var lastRotationDate = DateTime.parse('2024-03-19');//manual set for last rotation
+    var lastRotationDate = DateTime.parse(Config.lastRotationDate);
     var daysDiff = lastRotationDate.add(Duration(days: 365)).difference(now).inDays;
 
     return (daysDiff +1) ~/ 30;
