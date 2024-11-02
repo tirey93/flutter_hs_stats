@@ -83,7 +83,8 @@ class _ExpansionCardState extends State<ExpansionCard> {
 
   int getMonths() {
     var now = DateTime.now();
-    var daysDiff = DateTime(now.year + 1, 4, 1).difference(now).inDays;
+    var lastRotationDate = DateTime.parse('2024-03-19');//manual set for last rotation
+    var daysDiff = lastRotationDate.add(Duration(days: 365)).difference(now).inDays;
 
     return (daysDiff +1) ~/ 30;
   }
