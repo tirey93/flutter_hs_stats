@@ -2,13 +2,15 @@
 
 ![alt text](https://github.com/tirey93/flutter_hs_stats/blob/main/assets/demo.png?raw=true)
 
-This is mobile app for checking Hearthstone stats.
+This is mobile app for checking Hearthstone stats. It wildly uses Hearthstone Deck Tracker API.
 Stats includes:
 - Number of collectible cards in player's collection
 - Sum of dust("rares" in fact*) for each year and for each expansion
 - Sum of "rares" in whole wild
 - Average number of "rares"* in each year
 - Average number of "rares"* in remaing current wild(e.x. if in current wild 5 months remains to next rotation it divides sum of all wild collectible cards by 5)
+- Number of free dust(Recalculated to "rares")
+- Last reload  of user collection(made by Hearthstone Deck Tracker).
 
 *By "rares" I mean my own stat currency. Rare is worth 20 dust.
 - 1 legendary card = 20 rare cards = 4 epic cards
