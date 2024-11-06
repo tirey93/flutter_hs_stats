@@ -104,6 +104,7 @@ void subtractUncollectibleSignature(Summary summary){
     var toSubtract = subtraction.value;
 
     var oldValue = summary.expansions[expansion]!.rarities[rarity]!.qualities['signature'];
+    //to fix - what if player doesnt have signature? We subtract too much.
     summary.expansions[expansion]!.rarities[rarity]!.qualities['signature'] = oldValue! - toSubtract;
   }
 }

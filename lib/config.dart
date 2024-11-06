@@ -13,25 +13,40 @@ class Config {
 
     "WILD": Expansion("Wild", 'Wild', "Wild", null, null),
   };
-  static Map<String, int> get uncollectibleSignatures => {
-    //always check if golden copy of card is collectible!
-    "ISLAND_VACATION.COMMON": 4,
-    "ISLAND_VACATION.RARE": 2,
-    "ISLAND_VACATION.EPIC": 2,
+  static Set<String> get uncollectibleSignatures => {
+    //SPACE
+    "Red Giant",
+    
+    //ISLAND_VACATION
+    "Hydration Station",
+    "Power Spike",
+    "Tidepool Pupil",
+    "Mixologist",
 
-    "WHIZBANGS_WORKSHOP.COMMON": 4,
-    "WHIZBANGS_WORKSHOP.RARE": 0,
-    "WHIZBANGS_WORKSHOP.EPIC": 4,
+    //WHIZBANGS_WORKSHOP
+    "Rambunctious Stuffy",
+    "Toyrannosaurus",
+    "Watercolor Artist",
+    "Corridor Sleeper",
 
-    "WILD_WEST.COMMON": 2,
-    "WILD_WEST.RARE": 2,
-    "WILD_WEST.EPIC": 4,
+    //WILD_WEST
+    "Pile of Bones",
+    "Wishing Well",
+    "Walking Mountain",
+    "Howdyfin",
+    "Kobold Miner",
+    "High Noon Duelist",
 
-    "TITANS.COMMON": 4,
-    "TITANS.RARE": 4,
-    "TITANS.EPIC": 2,
+    //TITANS
+    "Astral Serpent",
+    "Imprisoned Horror",
+    "Minotauren",
+    "Ravenous Kraken",
+    "Angry Helhound",
 
-    "BATTLE_OF_THE_BANDS.COMMON": 4,
+    //BATTLE_OF_THE_BANDS
+    "Void Virtuoso",
+    "Cowbell Soloist",
   };
   static Map<String, int> get uncollectibleInWild => {
     "COMMON.signature": 2,
