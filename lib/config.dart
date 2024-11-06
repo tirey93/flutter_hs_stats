@@ -48,9 +48,19 @@ class Config {
     "Void Virtuoso",
     "Cowbell Soloist",
   };
-  static Map<String, int> get uncollectibleInWild => {
-    "COMMON.signature": 2,
-    "LEGENDARY.regular": 5,
-    "LEGENDARY.golden": 1,
+  static Set<String> get uncollectibleInWild => {
+    //Signatures
+    "Deathlord",
+    "Northshire Cleric",
+
+    //Legendary Regular
+    "Altruis the Outcast",
+    "Nethrandamus",
+    "Silas Darkmoon",
+    "Flightmaster Dungar",
+    "Prince Renathal",
+
+    //Legendary Golden
+    "SN1P-SN4P",
   };
 }
