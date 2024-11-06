@@ -16,6 +16,8 @@ class Config {
   static Set<String> get uncollectibleSignatures => {
     //SPACE
     "Red Giant",
+    "Galactic Crusader",
+    "Supernova",
     
     //ISLAND_VACATION
     "Hydration Station",

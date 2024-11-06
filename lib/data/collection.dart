@@ -36,7 +36,7 @@ class CollectionData {
     });
 
     DateFormat format = DateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
-    var dateTime = format.parse(json['lastModified']).add(Duration(hours: 2));
+    var dateTime = format.parse(json['lastModified']);
     AdditionalInfo additionalInfo = AdditionalInfo(rares: json['dust'] ~/ 20, lastModified: dateTime);
     return CollectionData(collection: parsedCollection, additionalInfo: additionalInfo);
   }
