@@ -47,20 +47,21 @@ class Config {
     //BATTLE_OF_THE_BANDS
     "Void Virtuoso",
     "Cowbell Soloist",
-  };
-  static Set<String> get uncollectibleInWild => {
-    //Signatures
+
+    //WILD
     "Deathlord",
     "Northshire Cleric",
-
-    //Legendary Regular
+  };
+  static Set<String> get uncollectibleRegulars => {
+    //LEGENDARIES
     "Altruis the Outcast",
     "Nethrandamus",
     "Silas Darkmoon",
     "Flightmaster Dungar",
     "Prince Renathal",
-
-    //Legendary Golden
+  };
+  static Set<String> get uncollectibleGoldens => {
+    //LEGENDARIES
     "SN1P-SN4P",
   };
 }

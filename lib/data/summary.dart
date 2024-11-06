@@ -33,7 +33,6 @@ Future<Summary> fetchSummary(Auth auth) async {
           int a = 5;
         }
 
-
         summary.incrementStandard(card, entry.qualities);
       }
       else{
@@ -49,8 +48,6 @@ Future<Summary> fetchSummary(Auth auth) async {
       }
     }
   }
-  subtractUncollectibleSignature(summary);
-  subtractUncollectibleInWild(summary);
 
   final cacheManager = DefaultCacheManager();
   cacheManager.putFile(
@@ -68,12 +65,12 @@ class Summary {
   void incrementStandard(CardEntry card, Map<String, int> qualities)
   => expansions[card.set]
     !.rarities[card.rarity]
-    !.increment(card.normalCollectible, card.goldenCollectible, qualities);
+    !.increment(card, qualities);
 
   void incrementWild(CardEntry card, Map<String, int> qualities)
   => expansions['WILD']
     !.rarities[card.rarity]
-    !.increment(card.normalCollectible, card.goldenCollectible, qualities);
+    !.increment(card, qualities);
 
   Summary(this.additionalInfo);
   Summary.fromJson(Map<String, dynamic> json) {
@@ -92,33 +89,5 @@ class Summary {
       map['additionalInfo'] = additionalInfo!.toJson();
     }
     return map;
-  }
-}
-
-void subtractUncollectibleSignature(Summary summary){
-  var toSubtracts = cfg.Config.uncollectibleSignatures;
-
-  for (var subtraction in toSubtracts.entries) {
-    var expansion = subtraction.key.split('.')[0];
-    var rarity = subtraction.key.split('.')[1];
-    var toSubtract = subtraction.value;
-
-    var oldValue = summary.expansions[expansion]!.rarities[rarity]!.qualities['signature'];
-    //to fix - what if player doesnt have signature? We subtract too much.
-    summary.expansions[expansion]!.rarities[rarity]!.qualities['signature'] = oldValue! - toSubtract;
-  }
-}
-
-void subtractUncollectibleInWild(Summary summary){
-  var toSubtracts = cfg.Config.uncollectibleInWild;
-
-  for (var subtraction in toSubtracts.entries) {
-    var expansion = 'WILD';
-    var rarity = subtraction.key.split('.')[0];
-    var quality = subtraction.key.split('.')[1];
-    var toSubtract = subtraction.value;
-
-    var oldValue = summary.expansions[expansion]!.rarities[rarity]!.qualities[quality];
-    summary.expansions[expansion]!.rarities[rarity]!.qualities[quality] = oldValue! - toSubtract;
   }
 }

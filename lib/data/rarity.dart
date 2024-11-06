@@ -1,3 +1,6 @@
+import 'package:hs_stats/config.dart';
+import 'package:hs_stats/data/card.dart';
+
 class Rarity {
   final String id;
   final int normalCost;
@@ -11,13 +14,13 @@ class Rarity {
   };
 
   Rarity(this.id, this.normalCost, this.premiumCost);
-
-  void increment(bool normalCollectible, bool goldenCollectible, Map<String, int> qualities){
-    if (normalCollectible)
+  void increment(CardEntry card, Map<String, int> qualities){
+    if (card.normalCollectible && !Config.uncollectibleRegulars.contains(card.name))
       this.qualities["regular"] = this.qualities["regular"]! + qualities["regular"]!;
-    for (var quality in qualities.entries.where((x) => x.key != "regular" && goldenCollectible)) {
-      this.qualities[quality.key] = this.qualities[quality.key]! + quality.value;
-    }
+    if(card.goldenCollectible && !Config.uncollectibleGoldens.contains(card.name))
+      this.qualities["golden"] = this.qualities["golden"]! + qualities["golden"]!;
+    if(card.goldenCollectible && !Config.uncollectibleSignatures.contains(card.name))
+      this.qualities["signature"] = this.qualities["signature"]! + qualities["signature"]!;
   }
   int getNormalCost() => qualities['regular']! * normalCost;
   int getNormalCount() => qualities['regular']!;
