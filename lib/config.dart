@@ -4,8 +4,8 @@ class Config {
   static String get lastRotationDate => "2025-03-25";
   static Map<String, Expansion> get expansions => {
     "EMERALD_DREAM": Expansion("Emerald Dream", "Year of the Raptor", "Emerald", 2025, 3),
-    "_EXP2": Expansion("???", "Year of the Raptor", "???", 2025, 7),
-    "_EXP3": Expansion("???", "Year of the Raptor", "???", 2025, 11),
+    "THE_LOST_CITY": Expansion("The Lost City of Un'Goro", "Year of the Raptor", "Lost", 2025, 7),
+    "TIME_TRAVEL": Expansion("Across the Timeways", "Year of the Raptor", "Timeways", 2025, 11),
 
     "WHIZBANGS_WORKSHOP": Expansion("Whizbang's Workshop", "Year of the Pegasus", "Whizbang", 2024, 3),
     "ISLAND_VACATION": Expansion("Perils in Paradise", "Year of the Pegasus", "Perils", 2024, 7),
@@ -14,6 +14,12 @@ class Config {
     "WILD": Expansion("Wild", 'Wild', "Wild", null, null),
   };
   static Set<String> get uncollectibleSignatures => {
+    //TIMEWAYS
+    "Hourglass Attendant",
+    "Paltry Flutterwing",
+    "Futuristic Forefather",
+    "Azure Queen Sindragosa"
+
     //EMERALD
     "Ancient of Yore",
     "Hopeful Dryad",

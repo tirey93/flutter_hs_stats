@@ -31,3 +31,5 @@ Instruction how to get it:
 - in the URL of the endpoint(collection/?region...) copy **account_lo** and enter it to the app
 - on the "Cookies" window find **sessionid** - this is what you need to enter in the app
 
+# Useful links
+https://api.hearthstonejson.com/v1/latest/enUS/cards.json
