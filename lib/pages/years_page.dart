@@ -29,11 +29,8 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
   @override
   void initState() {
     super.initState();
-    getAuth().then((_) {
-      setState(() {
-        futureSummary = loadSummary();
-      });
-    });
+    getAuth();
+    futureSummary = loadSummary();
   }
 
   Future<void> getAuth() async{
@@ -51,12 +48,12 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
       futureSummary = loadSummary(forceRefresh: true);
     });
   }
-  Future<void> _saveSession(Auth auth) async {
-    await cacheManager.putFile(
+  _saveSession(Auth auth)  {
+    cacheManager.putFile(
       'authKey',
       utf8.encode(jsonEncode(auth)),
       fileExtension: 'json',);
-    await _pullRefresh();
+    _pullRefresh();
   }
 
   Future<Summary>? loadSummary({bool forceRefresh = false}) async {
@@ -156,11 +153,11 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
       context: context,
       builder: (BuildContext context) {
         return SessionInputDialog(initialAuth: auth ?? Auth(), 
-          onSave: (newAuth) {
+          onSave: (newAuth) => {
             setState(() {
               auth = newAuth;
-            });
-            _saveSession(newAuth);
+              _saveSession(auth!);
+            })
           });
       },
     );

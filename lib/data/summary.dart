@@ -8,14 +8,14 @@ import 'package:hs_stats/data/expansion.dart';
 import 'package:hs_stats/config.dart' as cfg;
 
 Future<Summary> fetchSummary(Auth auth) async {
-  var configFuture = cfg.Config.init();
+  // var configFuture = cfg.Config.init();
   var collectionFuture = fetchCollection(auth);
   var cardsFuture = fetchCards();
   late CollectionData collection;
   late CardsData cards;
 
   await Future.wait([
-    configFuture.then((_) => null),
+    // configFuture.then((_) => null),
     collectionFuture.then((value) => collection = value),
     cardsFuture.then((value) => cards = value)
   ]);
