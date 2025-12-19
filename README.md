@@ -33,3 +33,16 @@ Instruction how to get it:
 
 # Useful links
 https://api.hearthstonejson.com/v1/latest/enUS/cards.json
+
+# Build
+docker run --rm -it `
+  -v ${PWD}:/app `
+  -w /app `
+  -e PUB_CACHE=/tmp/pub-cache `
+  ghcr.io/cirruslabs/flutter:3.38.5 `
+  bash -c "
+    rm -rf /tmp/pub-cache;
+    flutter clean;
+    flutter pub get;
+    flutter build apk --release
+  "

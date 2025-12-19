@@ -29,8 +29,11 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
   @override
   void initState() {
     super.initState();
-    getAuth();
-    futureSummary = loadSummary();
+    getAuth().then((_) {
+      setState(() {
+        futureSummary = loadSummary();
+      });
+    });
   }
 
   Future<void> getAuth() async{
