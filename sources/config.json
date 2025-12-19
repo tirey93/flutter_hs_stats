@@ -1,0 +1,99 @@
+{
+  "lastRotationDate": "2025-03-25",
+  "expansions": {
+    "EMERALD_DREAM": {
+      "fullName": "Emerald Dream",
+      "yearName": "Year of the Raptor",
+      "shortName": "Emerald",
+      "releaseYear": 2025,
+      "releaseMonth": 3
+    },
+    "THE_LOST_CITY": {
+      "fullName": "The Lost City of Un'Goro",
+      "yearName": "Year of the Raptor",
+      "shortName": "Lost",
+      "releaseYear": 2025,
+      "releaseMonth": 7
+    },
+    "TIME_TRAVEL": {
+      "fullName": "Across the Timeways",
+      "yearName": "Year of the Raptor",
+      "shortName": "Timeways",
+      "releaseYear": 2025,
+      "releaseMonth": 11
+    },
+    "WHIZBANGS_WORKSHOP": {
+      "fullName": "Whizbang's Workshop",
+      "yearName": "Year of the Pegasus",
+      "shortName": "Whizbang",
+      "releaseYear": 2024,
+      "releaseMonth": 3
+    },
+    "ISLAND_VACATION": {
+      "fullName": "Perils in Paradise",
+      "yearName": "Year of the Pegasus",
+      "shortName": "Perils",
+      "releaseYear": 2024,
+      "releaseMonth": 7
+    },
+    "SPACE": {
+      "fullName": "Great Dark Beyond",
+      "yearName": "Year of the Pegasus",
+      "shortName": "Beyond",
+      "releaseYear": 2024,
+      "releaseMonth": 11
+    },
+    "WILD": {
+      "fullName": "Wild",
+      "yearName": "Wild",
+      "shortName": "Wild",
+      "releaseYear": null,
+      "releaseMonth": null
+    }
+  },
+  "uncollectibleSignatures": [
+    "Hourglass Attendant",
+    "Paltry Flutterwing",
+    "Futuristic Forefather",
+    "Azure Queen Sindragosa",
+    "Ancient of Yore",
+    "Hopeful Dryad",
+    "Tranquil Treant",
+    "Red Giant",
+    "Galactic Crusader",
+    "Supernova",
+    "Hydration Station",
+    "Power Spike",
+    "Tidepool Pupil",
+    "Mixologist",
+    "Rambunctious Stuffy",
+    "Toyrannosaurus",
+    "Watercolor Artist",
+    "Corridor Sleeper",
+    "Pile of Bones",
+    "Wishing Well",
+    "Walking Mountain",
+    "Howdyfin",
+    "Kobold Miner",
+    "High Noon Duelist",
+    "Astral Serpent",
+    "Imprisoned Horror",
+    "Minotauren",
+    "Ravenous Kraken",
+    "Angry Helhound",
+    "Void Virtuoso",
+    "Cowbell Soloist",
+    "Deathlord",
+    "Northshire Cleric"
+  ],
+  "uncollectibleRegulars": [
+    "Altruis the Outcast",
+    "Nethrandamus",
+    "Silas Darkmoon",
+    "Flightmaster Dungar",
+    "Prince Renathal"
+  ],
+  "uncollectibleGoldens": [
+    "SN1P-SN4P"
+  ]
+}
