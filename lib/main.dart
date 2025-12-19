@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hs_stats/pages/years_page.dart';
-import 'package:hs_stats/config.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Config.init();
+void main() {
   runApp(const MainApp());
 }
 
