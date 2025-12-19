@@ -51,12 +51,12 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
       futureSummary = loadSummary(forceRefresh: true);
     });
   }
-  _saveSession(Auth auth)  {
-    cacheManager.putFile(
+  Future<void> _saveSession(Auth auth) async {
+    await cacheManager.putFile(
       'authKey',
       utf8.encode(jsonEncode(auth)),
       fileExtension: 'json',);
-    _pullRefresh();
+    await _pullRefresh();
   }
 
   Future<Summary>? loadSummary({bool forceRefresh = false}) async {
@@ -156,11 +156,11 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
       context: context,
       builder: (BuildContext context) {
         return SessionInputDialog(initialAuth: auth ?? Auth(), 
-          onSave: (newAuth) => {
+          onSave: (newAuth) {
             setState(() {
               auth = newAuth;
-              _saveSession(auth!);
-            })
+            });
+            _saveSession(newAuth);
           });
       },
     );
