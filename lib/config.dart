@@ -18,7 +18,7 @@ class Config {
       _lastRotationDate = jsonData['lastRotationDate'];
       _expansions = {};
       (jsonData['expansions'] as Map<String, dynamic>).forEach((key, value) {
-        _expansions[key] = Expansion.fromJson(value);
+        _expansions[key] = Expansion(value['fullName'], value['yearName'], value['shortName'], value['releaseYear'], value['releaseMonth']);
       });
 
       _uncollectibleSignatures = Set<String>.from(jsonData['uncollectibleSignatures'] as List<dynamic>);
