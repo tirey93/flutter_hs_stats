@@ -10,7 +10,7 @@ import 'package:hs_stats/widgets/info_dialog.dart';
 import 'package:hs_stats/widgets/session_input_dialog.dart';
 import 'package:hs_stats/widgets/year_card.dart';
 import 'package:intl/intl.dart';
-import 'package:hs_stats/config.dart' as cfg;
+
 
 
 class HearthstoneYearsPage extends StatefulWidget {
