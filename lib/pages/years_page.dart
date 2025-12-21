@@ -10,6 +10,8 @@ import 'package:hs_stats/widgets/info_dialog.dart';
 import 'package:hs_stats/widgets/session_input_dialog.dart';
 import 'package:hs_stats/widgets/year_card.dart';
 import 'package:intl/intl.dart';
+import 'package:hs_stats/config.dart' as cfg;
+
 
 class HearthstoneYearsPage extends StatefulWidget {
   const HearthstoneYearsPage({super.key});
@@ -61,6 +63,7 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
       return await fetchSummary(auth!);
     var fileInfo = await cacheManager.getFileFromCache(cacheKey);
     if (fileInfo != null) {
+      await cfg.Config.init();
       final cachedData = await fileInfo.file.readAsString();
       return Summary.fromJson(jsonDecode(cachedData));
     }

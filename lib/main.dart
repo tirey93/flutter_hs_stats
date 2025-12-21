@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hs_stats/pages/years_page.dart';
-import 'package:hs_stats/config.dart' as cfg;
 
 void main() {
-  var configFuture = cfg.Config.init();
-  configFuture.then((_) {
-    runApp(const MainApp());
-  });
+  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
