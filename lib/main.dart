@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hs_stats/pages/years_page.dart';
 
 void main() {
-  runApp(const MainApp());
+  var configFuture = cfg.Config.init();
+  configFuture.then((_) {
+    runApp(const MainApp());
+  });
 }
 
 class MainApp extends StatelessWidget {
