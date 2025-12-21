@@ -63,7 +63,7 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
       return await fetchSummary(auth!);
     var fileInfo = await cacheManager.getFileFromCache(cacheKey);
     if (fileInfo != null) {
-      await cfg.Config.init();
+      
       final cachedData = await fileInfo.file.readAsString();
       return Summary.fromJson(jsonDecode(cachedData));
     }
