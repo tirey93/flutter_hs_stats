@@ -15,9 +15,10 @@ Future<Summary> fetchSummary(Auth auth) async {
   late CardsData cards;
 
   await Future.wait([
-    configFuture.then((_) => null),
-    collectionFuture.then((value) => collection = value),
-    cardsFuture.then((value) => cards = value)
+    configFuture.then((_) => {
+      collectionFuture.then((value) => collection = value),
+      cardsFuture.then((value) => cards = value)
+    }),
   ]);
 
   var summary = Summary(collection.additionalInfo);
