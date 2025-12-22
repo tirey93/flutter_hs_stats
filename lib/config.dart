@@ -3,7 +3,6 @@ import 'package:hs_stats/data/expansion.dart';
 import 'package:http/http.dart' as http;
 
 class Config {
-  static bool _isInitialized = false;
   static late String _lastRotationDate;
   static late Map<String, Expansion> _expansions;
   static late Set<String> _uncollectibleSignatures;
@@ -11,9 +10,6 @@ class Config {
   static late Set<String> _uncollectibleGoldens;
 
   static Future<void> init() async {
-    if (_isInitialized) {
-      return;
-    }
     final response = await http.get(Uri.parse('https://raw.githubusercontent.com/tirey93/flutter_hs_stats/refs/heads/main/sources/config.json'));
   
     if (response.statusCode == 200) {
@@ -28,7 +24,6 @@ class Config {
       _uncollectibleSignatures = Set<String>.from(jsonData['uncollectibleSignatures'] as List<dynamic>);
       _uncollectibleRegulars = Set<String>.from(jsonData['uncollectibleRegulars'] as List<dynamic>);
       _uncollectibleGoldens = Set<String>.from(jsonData['uncollectibleGoldens'] as List<dynamic>);
-      _isInitialized = true;
     } else {
       throw Exception('Failed to load JSON: ${response.statusCode}');
     }

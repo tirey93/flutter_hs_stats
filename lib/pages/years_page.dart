@@ -32,7 +32,6 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
   void initState() {
     super.initState();
     getAuth();
-    
   }
 
   Future<void> getAuth() async{
@@ -63,7 +62,6 @@ class _HearthstoneYearsPageState extends State<HearthstoneYearsPage> {
       return await fetchSummary(auth!);
     var fileInfo = await cacheManager.getFileFromCache(cacheKey);
     if (fileInfo != null) {
-      
       final cachedData = await fileInfo.file.readAsString();
       return Summary.fromJson(jsonDecode(cachedData));
     }
