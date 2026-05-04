@@ -22,26 +22,12 @@
       "releaseYear": 2025,
       "releaseMonth": 11
     },
-    "WHIZBANGS_WORKSHOP": {
-      "fullName": "Whizbang's Workshop",
-      "yearName": "Year of the Pegasus",
-      "shortName": "Whizbang",
-      "releaseYear": 2024,
+    "CATACLYSM": {
+      "fullName": "Cataclysm",
+      "yearName": "Year of the Scarab",
+      "shortName": "Catac",
+      "releaseYear": 2026,
       "releaseMonth": 3
-    },
-    "ISLAND_VACATION": {
-      "fullName": "Perils in Paradise",
-      "yearName": "Year of the Pegasus",
-      "shortName": "Perils",
-      "releaseYear": 2024,
-      "releaseMonth": 7
-    },
-    "SPACE": {
-      "fullName": "Great Dark Beyond",
-      "yearName": "Year of the Pegasus",
-      "shortName": "Beyond",
-      "releaseYear": 2024,
-      "releaseMonth": 11
     },
     "WILD": {
       "fullName": "Wild",
