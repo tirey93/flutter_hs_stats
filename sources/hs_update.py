@@ -7,7 +7,7 @@ import os
 import urllib.request
 from collections import defaultdict
 
-# ===================== KONFIGURACJA =====================
+# ===================== Configuration =====================
 def load_env(path):
     env = {}
     with open(path, 'r', encoding='utf-8') as f:
@@ -45,17 +45,17 @@ def fetch_json(url, headers=None):
         return json.loads(r.read().decode('utf-8'))
 
 def fetch_collection():
-    print("Pobieranie kolekcji z HSReplay...")
+    print("Fetching collection from HSReplay...")
     url = f"https://hsreplay.net/api/v1/collection/?region=2&account_lo={ACCOUNT_LO}&type=CONSTRUCTED"
     headers = {**BROWSER_HEADERS, "Cookie": f"sessionid={SESSION_ID}"}
     return fetch_json(url, headers)
 
 def fetch_cards():
-    print("Pobieranie kart z HearthstoneJSON...")
+    print("Fetching cards from HearthstoneJSON...")
     return fetch_json("https://api.hearthstonejson.com/v1/latest/enUS/cards.json")
 
 def fetch_config():
-    print("Pobieranie configu z GitHub...")
+    print("Fetching config from GitHub...")
     headers = {
         "Authorization": f"token {GITHUB_TOKEN}",
         "Accept": "application/vnd.github.v3+json"
@@ -158,17 +158,18 @@ def update_gist(content):
     req = urllib.request.Request(url, data=json.dumps(data).encode('utf-8'), headers=headers, method='PATCH')
     with urllib.request.urlopen(req) as r:
         result = json.loads(r.read().decode('utf-8'))
-        print(f"Gist zaktualizowany: {result['html_url']}")
+        print(f"Gist updated: {result['html_url']}")
 
 if __name__ == "__main__":
     try:
         config     = fetch_config()
         collection = fetch_collection()
         cards      = fetch_cards()
-        print("Generowanie raportu...")
+        print(f"Last Modified: {collection.get('lastModified', 'N/A')}")
+        print("Generating report...")
         md = generate_markdown(config, collection, cards)
-        print("Aktualizacja gista...")
+        print("Updating gist...")
         update_gist(md)
-        print("Gotowe!")
+        print("Done!")
     except Exception as e:
-        print(f"Błąd: {e}")
+        print(f"Error: {e}")
