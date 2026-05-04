@@ -118,8 +118,6 @@ def generate_markdown(config, collection, cards_data):
     for year_name in sorted(years.keys(), key=lambda y: -max(x["config"].get("releaseYear") or 0 for x in years[y])):
         expansions = years[year_name]
         md.append(f"\n## {year_name}\n")
-        md.append("| Expansion | Leg | Ep | Ra | Cm | G.L | G.E | G.R | G.C | Value |")
-        md.append("|-----------|-----|----|----|----|-----|-----|-----|-----|-------|")
 
         year_total = 0
         for exp in expansions:
@@ -138,13 +136,22 @@ def generate_markdown(config, collection, cards_data):
             exp_total = leg_r*20 + leg_g*80 + epic_r*5 + epic_g*20 + rare_r*1 + rare_g*5 + comm_g*2
             year_total += exp_total
 
-            md.append(f"| {exp_name} | {leg_r} | {epic_r} | {rare_r} | {comm_r} | {leg_g} | {epic_g} | {rare_g} | {comm_g} | **{exp_total}** |")
+            md.append(f"### {exp_name} ({exp_total})")
+            md.append("")
+            md.append("| Rarity | Normal | Golden |")
+            md.append("|--------|--------|--------|")
+            md.append(f"| Leg    | {leg_r:>6} | {leg_g:>6} |")
+            md.append(f"| Epic   | {epic_r:>6} | {epic_g:>6} |")
+            md.append(f"| Rare   | {rare_r:>6} | {rare_g:>6} |")
+            md.append(f"| Common | {comm_r:>6} | {comm_g:>6} |")
+            md.append("")
 
         if len(expansions) > 1:
-            md.append(f"| **YEAR TOTAL** | | | | | | | | | **{year_total}** |")
+            md.append(f"**Year Total: {year_total}**")
+            md.append("")
         total_value += year_total
 
-    md.append(f"\n---\n**GRAND TOTAL: {total_value} rares**")
+    md.append(f"---\n**Grand Total: {total_value} rares**")
     return "\n".join(md)
 
 def update_gist(content):
