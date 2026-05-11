@@ -107,7 +107,7 @@ def generate_markdown(config, collection, cards_data):
             "code": set_code, "config": exp_config, "data": expansions_data[set_code]
         })
     for year in years:
-        years[year].sort(key=lambda x: x["config"].get("releaseMonth") or 0)
+        years[year].sort(key=lambda x: x["config"].get("releaseMonth") or 0, reverse=True)
 
     md = ["# Hearthstone Collection Stats\n"]
     md.append(f"**Dust:** {collection.get('dust', 'N/A')} | **Rares:** {collection.get('dust', 0) // 20}")
